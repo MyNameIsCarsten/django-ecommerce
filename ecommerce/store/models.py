@@ -50,6 +50,18 @@ class Order(models.Model):
         # Can only return string values here
         return str(self.id)
     
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.get_total for item in orderitems])
+        return total
+    
+    @property
+    def get_cart_items(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.quantity for item in orderitems])
+        return total
+    
 # Order item model (Item within Cart)
 class OrderItem(models.Model):
     # Single product can be in multiple OrderItem
@@ -62,6 +74,11 @@ class OrderItem(models.Model):
     # How each instance will show up in the admin panel
     def __str__(self):
         return self.product.name
+    
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
 
 # Order Shipping model (Item within Cart)
 class ShippingAddress(models.Model):
