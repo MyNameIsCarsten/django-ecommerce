@@ -20,11 +20,20 @@ class Product(models.Model):
     # By default every product will be a physical item
     digital = models.BooleanField(default=False, null=True, blank=True)
 
-    # image
+    image = models.ImageField(null=True, blank=True)
 
     # How each instance will show up in the admin panel
     def __str__(self):
         return self.name
+    
+    # Handling error if no product image is set
+    @property # property decorator: lets you access this as an attribut rather than a method
+    def imageURL(self):
+        try:
+            url = self.image.url   
+        except:    
+            url = ''
+        return url
     
 # Order model
 class Order(models.Model):
