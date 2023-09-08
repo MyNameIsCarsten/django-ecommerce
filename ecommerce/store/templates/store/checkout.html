@@ -83,6 +83,7 @@
         }
 
         const form = document.getElementById('form');
+        csrftoken = form.getElementsByTagName('input')[0].value // change csrftoken
 
         form.addEventListener('submit', function(e){
             e.preventDefault()
@@ -142,6 +143,11 @@
             .then((data) => {
                 console.log('Success:', data);
                 alert('Transaction completed');
+
+                // Reset cookies
+                cart = {}
+                document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/' 
+
                 window.location.href = "{% url 'store' %}"
             });
         }
