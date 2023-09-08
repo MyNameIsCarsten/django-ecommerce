@@ -6,7 +6,7 @@ class Customer(models.Model):
     # User can only have one Customer | Customer can only have one User
     user =  models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
+    email = models.EmailField(max_length = 254, null=True)
 
     # How each instance will show up in the admin panel
     def __str__(self):
@@ -15,7 +15,7 @@ class Customer(models.Model):
 # Product model
 class Product(models.Model):
     name =  models.CharField(max_length=200)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=7, decimal_places=2)
     # Define if the product needs to be shipped (digital prodcuts do not need to be shipped)
     # By default every product will be a physical item
     digital = models.BooleanField(default=False, null=True, blank=True)
