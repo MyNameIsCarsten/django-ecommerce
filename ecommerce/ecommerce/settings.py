@@ -38,7 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'store.apps.StoreConfig'
+    # Third party apps
+    'paypal.standard.ipn',
+
+    # Custom Apps
+    'store.apps.StoreConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -130,3 +135,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Paypal
+PAYPAL_RECEIVER = 'sb-43l747q27327396@business.example.com'
+PAYPAL_TEST = True

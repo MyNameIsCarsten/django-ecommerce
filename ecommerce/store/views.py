@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from paypal.standard.forms import PayPalPaymentsForm
+from django.urls import reverse
+from django.conf import settings
 import json
 import datetime
 from .models import *
@@ -34,8 +38,24 @@ def checkout(request):
      cartItems = data['cartItems']
      order = data['order']
      items = data['items']
+     print(order.get_cart_total)
 
-     context = {'items': items, 'order': order, 'cartItems': cartItems}
+     # Paypal
+     host = request.get_host()
+     paypal_dict = {
+          'business': settings.PAYPAL_RECEIVER,
+          'amount': order.get_cart_total,
+          'item_name': 'Order-Item-No-2',
+          'invoice': 'INVOICE_NO-2',
+          'currency_code': 'USD',
+          'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+          'return_url': 'http://{}{}'.format(host, reverse('payment-completed')),
+          'cancel_url': 'http://{}{}'.format(host, reverse('payment-failed')),
+     }
+
+     paypal_payment_button = PayPalPaymentsForm(initial=paypal_dict)
+
+     context = {'items': items, 'order': order, 'cartItems': cartItems, 'paypal_payment_button': paypal_payment_button}
      return render(request, 'store/checkout.html', context)
 
 def updateItem (request):
@@ -95,3 +115,12 @@ def processOrder(request):
           )
 
      return JsonResponse('Payment submitted', safe=False)
+
+@csrf_exempt
+def payment_completed_view(request):
+     context = request.POST
+     return render(request, 'store/payment-completed.html', {'context': context})
+
+@csrf_exempt
+def payment_failed_view(request):
+     return render(request, 'store/payment-failed.html')
