@@ -119,7 +119,7 @@ from django.urls import reverse
 paypalrestsdk.configure({
   "mode": "sandbox", # sandbox or live
   "client_id": "ARRcoBGpGczOv-ojhkx98m-WsCKVtFjQ-hclh2BnjFAyciyvXSmpPIDDhoB1G6-XOo-g0cmuuMeN9Ta_",
-  "client_secret": "EH27rqxfWZsQ4mRK_-DCctk_9Dy18YezfaawMihUDByqzG449vLxv0imsgRqcmDfgB2TDco6_gyalUNH" })
+  "client_secret": "" })
 
 def create_payment(request):
     data = cartData(request)
