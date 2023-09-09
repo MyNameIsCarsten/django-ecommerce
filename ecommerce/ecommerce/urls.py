@@ -23,6 +23,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # include path to store app urls.py
     path('', include('store.urls')),
+
+    # paypal url
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

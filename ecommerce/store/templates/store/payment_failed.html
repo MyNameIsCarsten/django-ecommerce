@@ -1,0 +1,7 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <h1>Payment Failed</h1>
+    <p>Your payment was not completed. Please try again.</p>
+    <a  style="margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Back to Checkout</a>
+{% endblock content %}

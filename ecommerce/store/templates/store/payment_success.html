@@ -1,0 +1,7 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <h1>Payment Successful</h1>
+    <p>Thank you for your purchase!</p>
+    <a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
+{% endblock content %}
