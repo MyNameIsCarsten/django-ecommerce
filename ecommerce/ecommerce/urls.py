@@ -26,6 +26,7 @@ urlpatterns = [
 
     # paypal url
     path('paypal/', include('paypal.standard.ipn.urls')),
+    
 
 ]
 

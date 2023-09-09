@@ -38,10 +38,19 @@
             </div>
             <br>
             <div class="box-element hidden" id="payment-info">
-                <small>Paypal Options</small>
-                <div class="">
-                    {{paypal_payment_button.render}}
-                </div>
+                <small>Payment Options:</small>
+                <form action="{% url 'create_payment' %}" method="POST">
+                    {% csrf_token %}
+                    <!--<button type="submit">Pay with PayPal</button>-->
+                    <button type="submit" class="paypal-button">
+                        <span class="paypal-button-title">
+                          Buy now with
+                        </span>
+                        <span class="paypal-logo">
+                          <i>Pay</i><i>Pal</i>
+                        </span>
+                      </button>
+                </form>
 
                 <!--<button id="make-payment">Make payment</button>-->
             </div>
@@ -80,6 +89,10 @@
             document.getElementById('user-info').innerHTML = '';
         }
 
+        if ( total <= 0){
+            document.getElementById('form-wrapper').classList.add('hidden');
+        }
+
         if (shipping == 'False' && user != 'AnonymousUser') {
             // Hide entire form if user is logged in and shipping is false
             document.getElementById('form-wrapper').classList.add('hidden');
@@ -90,6 +103,7 @@
         const form = document.getElementById('form');
         csrftoken = form.getElementsByTagName('input')[0].value // change csrftoken
 
+        
         form.addEventListener('submit', function(e){
             e.preventDefault()
             console.log('Form Submitted...')
