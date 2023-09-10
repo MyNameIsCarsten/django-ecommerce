@@ -8,6 +8,7 @@ import json
 import datetime
 from .models import *
 from .utils import cookieCart, cartData, guestOrder
+import store.config as config
 
 # Create your views here.
 def store(request):
@@ -118,8 +119,10 @@ from django.urls import reverse
 
 paypalrestsdk.configure({
   "mode": "sandbox", # sandbox or live
-  "client_id": "ARRcoBGpGczOv-ojhkx98m-WsCKVtFjQ-hclh2BnjFAyciyvXSmpPIDDhoB1G6-XOo-g0cmuuMeN9Ta_",
-  "client_secret": "EH27rqxfWZsQ4mRK_-DCctk_9Dy18YezfaawMihUDByqzG449vLxv0imsgRqcmDfgB2TDco6_gyalUNH" })
+  "client_id": config.client_id,
+  "client_secret": config.client_secret })
+
+
 
 def create_payment(request):
     data = cartData(request)
